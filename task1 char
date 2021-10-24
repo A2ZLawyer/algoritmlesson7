@@ -1,0 +1,56 @@
+using System;
+
+namespace algoritmlesson7
+{
+    public class Program
+    {
+        private static void PrintArray(
+            char[,] arr, int m, int n, int i, int j, char[] path, int idx)
+        {
+            path[idx] = arr[i, j];
+            if (i == m - 1)
+            {
+                for (int k = j + 1; k < n; k++)
+                {
+                    path[idx + k - j] = arr[i, k];
+                }
+                for (int l = 0; l < idx + n - j; l++)
+                {
+                    Console.Write(path[l] + " ");
+                }
+                Console.WriteLine();
+                return;
+            }
+            if (j == n - 1)
+            {
+                for (int k = i + 1; k < m; k++)
+                {
+                    path[idx + k - i] = arr[k, j];
+                }
+                for (int l = 0; l < idx + m - i; l++)
+                {
+                    Console.Write(path[l] + " ");
+                }
+                Console.WriteLine();
+                return;
+            }
+            PrintArray(arr, m, n, i + 1, j, path, idx + 1);
+            PrintArray(arr, m, n, i, j + 1, path, idx + 1);
+        }
+        public static void Main(String[] args)
+        {
+            int m = 3;
+            int n = 3;
+            char[,] arr = {
+                { 'A', 'B', 'C' },
+                { 'D', 'E', 'F' },
+                { 'G', 'H', 'I' }
+            };
+
+            int maxLengthOfPath = m + n - 1;
+            PrintArray(arr, m, n, 0, 0, new char[maxLengthOfPath], 0);
+        }
+
+    }
+
+}
